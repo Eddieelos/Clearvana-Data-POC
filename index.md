@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Home
+title: Clearvana POC - Data Model
 ---
 
 # Clearvana POC - Data Model
