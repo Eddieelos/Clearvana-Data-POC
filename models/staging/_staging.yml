@@ -1,0 +1,306 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: "Cleaned and standardized customer dimension from MySQL db2.customers. Standardizes country codes and prepares customer attributes for downstream analytics."
+    columns:
+      - name: customer_id
+        description: "{{ doc('customer_id') }}"
+        tests:
+          - unique
+          - not_null
+      
+      - name: customer_name
+        description: "{{ doc('customer_name') }}"
+        tests:
+          - not_null
+      
+      - name: customer_created_at
+        description: "{{ doc('customer_created_at') }}"
+      
+      - name: customer_last_updated
+        description: "{{ doc('customer_last_updated') }}"
+      
+      - name: default_currency
+        description: "{{ doc('default_currency') }}"
+      
+      - name: account_manager
+        description: "{{ doc('account_manager') }}"
+      
+      - name: country_code
+        description: "{{ doc('country_code') }}"
+        tests:
+          - accepted_values:
+              values: ['US', 'AU', 'UK', 'CA', 'NZ', 'AMERICA', 'AUSTRALIA']
+              config:
+                severity: warn
+
+  - name: stg_products
+    description: "Product catalog from MySQL db2.recurring_products. Standardizes product family naming (WatchDog vs Watchdog inconsistencies) and formats pricing information."
+    columns:
+      - name: product_id
+        description: "{{ doc('product_id') }}"
+        tests:
+          - unique
+          - not_null
+      
+      - name: product_plan_name
+        description: "{{ doc('product_plan_name') }}"
+      
+      - name: product_plan_name_raw
+        description: "{{ doc('product_plan_name_raw') }}"
+      
+      - name: product_family
+        description: "{{ doc('product_family') }}"
+        tests:
+          - accepted_values:
+              values: ['WatchDog', 'Retainer']
+      
+      - name: product_family_raw
+        description: "{{ doc('product_family_raw') }}"
+      
+      - name: billing_frequency
+        description: "{{ doc('billing_frequency') }}"
+        tests:
+          - accepted_values:
+              values: ['monthly', 'yearly']
+      
+      - name: fee_type
+        description: "{{ doc('fee_type') }}"
+      
+      - name: currency_code
+        description: "{{ doc('currency_code') }}"
+      
+      - name: monthly_fee
+        description: "{{ doc('monthly_fee') }}"
+      
+      - name: per_removal_price
+        description: "{{ doc('per_removal_price') }}"
+
+  - name: stg_subscriptions
+    description: "Subscription data from MySQL db2.stripe_subscriptions (2024+). Standardizes subscription status and calculates tenure metrics."
+    columns:
+      - name: subscription_id
+        description: "{{ doc('subscription_id') }}"
+        tests:
+          - unique
+          - not_null
+      
+      - name: customer_id
+        description: "{{ doc('customer_id') }}"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+      
+      - name: product_id
+        description: "{{ doc('product_id') }}"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_products')
+              field: product_id
+      
+      - name: subscription_status
+        description: "{{ doc('subscription_status') }}"
+        tests:
+          - accepted_values:
+              values: ['active', 'cancelled', 'paused', 'trialing']
+      
+      - name: subscription_amount
+        description: "{{ doc('subscription_amount') }}"
+        tests:
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+      
+      - name: currency_code
+        description: "{{ doc('subscription_currency') }}"
+      
+      - name: subscription_start_date
+        description: "{{ doc('subscription_start_date') }}"
+      
+      - name: subscription_ended_date
+        description: "{{ doc('subscription_ended_date') }}"
+      
+      - name: tenure_days
+        description: "{{ doc('tenure_days') }}"
+      
+      - name: tenure_months
+        description: "{{ doc('tenure_months') }}"
+      
+      - name: is_active
+        description: "{{ doc('is_active') }}"
+      
+      - name: is_churned
+        description: "{{ doc('is_churned') }}"
+
+  - name: stg_invoices
+    description: "Invoice transactions from MySQL db2.xero_invoices (2025+). Every customer charge has a Xero Invoice. Includes date dimensions for time-based analysis."
+    columns:
+      - name: invoice_id
+        description: "{{ doc('invoice_id') }}"
+        tests:
+          - unique
+          - not_null
+      
+      - name: customer_id
+        description: "{{ doc('customer_id') }}"
+      
+      - name: subscription_id
+        description: "{{ doc('subscription_id') }}"
+        tests:
+          - relationships:
+              to: ref('stg_subscriptions')
+              field: subscription_id
+      
+      - name: repeating_invoice_id
+        description: "{{ doc('repeating_invoice_id') }}"
+      
+      - name: invoice_created_at
+        description: "{{ doc('invoice_created_at') }}"
+      
+      - name: due_date
+        description: "{{ doc('due_date') }}"
+      
+      - name: fully_paid_on_date
+        description: "{{ doc('fully_paid_on_date') }}"
+      
+      - name: invoice_status
+        description: "{{ doc('invoice_status') }}"
+        tests:
+          - accepted_values:
+              values: ['PAID', 'AUTHORISED', 'VOIDED', 'DRAFT']
+      
+      - name: total_amount
+        description: "{{ doc('total_amount') }}"
+      
+      - name: amount_due
+        description: "{{ doc('amount_due') }}"
+      
+      - name: currency_code
+        description: "{{ doc('currency_code') }}"
+      
+      - name: currency_rate_to_aud
+        description: "{{ doc('currency_rate_to_aud') }}"
+      
+      - name: salesperson
+        description: "{{ doc('salesperson') }}"
+      
+      - name: invoice_date
+        description: "{{ doc('invoice_date') }}"
+      
+      - name: invoice_month
+        description: "{{ doc('invoice_month') }}"
+      
+      - name: invoice_year
+        description: "{{ doc('invoice_year') }}"
+      
+      - name: is_paid
+        description: "{{ doc('is_paid') }}"
+
+  - name: stg_invoice_items
+    description: "Invoice line items from MySQL db2.xero_invoices_items. Only one product_family type per invoice (no PPR Charges mixed with subscription fees). One line item per subscription payment, but multiple PPR Charges can be on one invoice."
+    columns:
+      - name: line_item_id
+        description: "{{ doc('line_item_id') }}"
+        tests:
+          - unique
+          - not_null
+      
+      - name: invoice_id
+        description: "{{ doc('invoice_id') }}"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_invoices')
+              field: invoice_id
+      
+      - name: product_id
+        description: "{{ doc('product_id') }}"
+      
+      - name: product_family
+        description: "{{ doc('product_family') }}"
+      
+      - name: product_family_raw
+        description: "{{ doc('product_family_raw') }}"
+      
+      - name: currency_code
+        description: "{{ doc('line_currency_code') }}"
+      
+      - name: line_amount
+        description: "{{ doc('line_amount') }}"
+      
+      - name: description
+        description: "{{ doc('description') }}"
+      
+      - name: ticket_id
+        description: "{{ doc('ticket_id') }}"
+      
+      - name: is_ticket_charge
+        description: "{{ doc('is_ticket_charge') }}"
+      
+      - name: is_missing_product_id
+        description: "{{ doc('is_missing_product_id') }}"
+
+  - name: stg_removal_tickets
+    description: "Removal ticket data from MySQL db2.removals_tickets (sampled). Each record represents an item of content being removed for a customer. Only WatchDog and Retainer customers included."
+    columns:
+      - name: ticket_id
+        description: "{{ doc('ticket_id') }}"
+        tests:
+          - unique
+          - not_null
+      
+      - name: customer_id
+        description: "{{ doc('customer_id') }}"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+      
+      - name: ticket_created_at
+        description: "{{ doc('ticket_created_at') }}"
+      
+      - name: ticket_last_updated
+        description: "{{ doc('ticket_last_updated') }}"
+      
+      - name: removal_status
+        description: "{{ doc('removal_status') }}"
+        tests:
+          - accepted_values:
+              values: ['Successful', 'Unsuccessful', 'In Progress', 'Not Started']
+      
+      - name: platform
+        description: "{{ doc('platform') }}"
+      
+      - name: successfully_removed_date
+        description: "{{ doc('successfully_removed_date') }}"
+      
+      - name: removal_price
+        description: "{{ doc('removal_price') }}"
+      
+      - name: currency_code
+        description: "{{ doc('currency_code') }}"
+      
+      - name: billing_type
+        description: "{{ doc('billing_type') }}"
+      
+      - name: ticket_date
+        description: "{{ doc('ticket_date') }}"
+      
+      - name: ticket_month
+        description: "{{ doc('ticket_month') }}"
+      
+      - name: ticket_year
+        description: "{{ doc('ticket_year') }}"
+      
+      - name: is_successful
+        description: "{{ doc('is_successful') }}"
+      
+      - name: is_unsuccessful
+        description: "{{ doc('is_unsuccessful') }}"
+      
+      - name: is_completed
+        description: "{{ doc('is_completed') }}"

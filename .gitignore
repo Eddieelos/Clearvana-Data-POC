@@ -1,22 +1,19 @@
-# Jekyll
-_site/
-.sass-cache/
-.jekyll-cache/
-.jekyll-metadata
-
-# Ruby
-*.gem
-.bundle
-vendor/
-Gemfile.lock
-
-# OS files
+target/
+dbt_packages/
+logs/
+*.duckdb
+*.duckdb.wal
 .DS_Store
-Thumbs.db
+.venv/
+__pycache__/
+*.pyc
 
-# Editor files
-*.swp
-*.swo
-*~
-.vscode/
-.idea/
+# Seed data files (contain sensitive data)
+seeds/*.csv
+!seeds/.gitkeep
+seeds.yml
+
+# Connection configuration (contains credentials)
+connection_config.sh
+profiles.yml
+

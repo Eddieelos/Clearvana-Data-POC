@@ -1,0 +1,328 @@
+version: 2
+
+models:
+  - name: int_subscriptions_enriched
+    description: "Enriched subscription data joining subscriptions with customers, products, invoices, and tickets. Provides a comprehensive view of subscription health with all related metrics."
+    columns:
+      # Keys
+      - name: subscription_id
+        description: "{{ doc('subscription_id') }}"
+        tests:
+          - unique
+          - not_null
+      
+      - name: customer_id
+        description: "{{ doc('customer_id') }}"
+      
+      - name: product_id
+        description: "{{ doc('product_id') }}"
+      
+      # Customer attributes (from stg_customers)
+      - name: customer_name
+        description: "{{ doc('customer_name') }}"
+        tests:
+          - not_null
+      
+      - name: country_code
+        description: "{{ doc('country_code') }}"
+      
+      - name: account_manager
+        description: "{{ doc('account_manager') }}"
+      
+      - name: default_currency
+        description: "{{ doc('default_currency') }}"
+      
+      # Product attributes (from stg_products)
+      - name: product_family
+        description: "{{ doc('product_family') }}"
+        tests:
+          - not_null
+      
+      - name: product_plan_name
+        description: "{{ doc('product_plan_name') }}"
+      
+      - name: billing_frequency
+        description: "{{ doc('billing_frequency') }}"
+      
+      - name: monthly_fee
+        description: "{{ doc('monthly_fee') }}"
+      
+      - name: per_removal_price
+        description: "{{ doc('per_removal_price') }}"
+      
+      # Subscription status (from stg_subscriptions)
+      - name: subscription_status
+        description: "{{ doc('subscription_status') }}"
+      
+      - name: subscription_amount
+        description: "{{ doc('subscription_amount') }}"
+      
+      - name: subscription_currency
+        description: "{{ doc('subscription_currency') }}"
+      
+      - name: subscription_start_date
+        description: "{{ doc('subscription_start_date') }}"
+      
+      - name: subscription_ended_date
+        description: "{{ doc('subscription_ended_date') }}"
+      
+      - name: tenure_days
+        description: "{{ doc('tenure_days') }}"
+      
+      - name: is_active
+        description: "{{ doc('is_active') }}"
+      
+      - name: is_churned
+        description: "{{ doc('is_churned') }}"
+      
+      # Invoice metrics (aggregated)
+      - name: invoice_count
+        description: "{{ doc('invoice_count') }}"
+      
+      - name: paid_invoice_count
+        description: "{{ doc('paid_invoice_count') }}"
+      
+      - name: total_invoice_revenue
+        description: "{{ doc('total_invoice_revenue') }}"
+      
+      - name: last_invoice_date
+        description: "{{ doc('last_invoice_date') }}"
+      
+      - name: first_invoice_date
+        description: "{{ doc('first_invoice_date') }}"
+      
+      # Ticket metrics (aggregated)
+      - name: total_tickets
+        description: "{{ doc('total_tickets') }}"
+      
+      - name: successful_tickets
+        description: "{{ doc('successful_tickets') }}"
+      
+      - name: unsuccessful_tickets
+        description: "{{ doc('unsuccessful_tickets') }}"
+      
+      - name: in_progress_tickets
+        description: "{{ doc('in_progress_tickets') }}"
+      
+      - name: not_started_tickets
+        description: "{{ doc('not_started_tickets') }}"
+      
+      - name: total_removal_revenue
+        description: "{{ doc('total_removal_revenue') }}"
+      
+      - name: last_ticket_date
+        description: "{{ doc('last_ticket_date') }}"
+      
+      - name: first_ticket_date
+        description: "{{ doc('first_ticket_date') }}"
+      
+      # Calculated metrics
+      - name: ticket_success_rate
+        description: "{{ doc('ticket_success_rate') }}"
+      
+      - name: revenue_per_ticket
+        description: "{{ doc('revenue_per_ticket') }}"
+      
+      - name: average_invoice_amount
+        description: "{{ doc('average_invoice_amount') }}"
+      
+      - name: ltv_estimate
+        description: "{{ doc('ltv_estimate') }}"
+
+  - name: int_invoices_with_products
+    description: "Invoice line items enriched with full product information, invoice headers, and calculated percentage contributions."
+    columns:
+      # Keys
+      - name: line_item_id
+        description: "{{ doc('line_item_id') }}"
+        tests:
+          - unique
+          - not_null
+      
+      - name: invoice_id
+        description: "{{ doc('invoice_id') }}"
+        tests:
+          - not_null
+      
+      - name: ticket_id
+        description: "{{ doc('ticket_id') }}"
+      
+      # Line item attributes
+      - name: line_amount
+        description: "{{ doc('line_amount') }}"
+      
+      - name: line_currency_code
+        description: "{{ doc('line_currency_code') }}"
+      
+      - name: description
+        description: "{{ doc('description') }}"
+      
+      - name: is_ticket_charge
+        description: "{{ doc('is_ticket_charge') }}"
+      
+      # Invoice attributes
+      - name: customer_id
+        description: "{{ doc('customer_id') }}"
+      
+      - name: invoice_created_at
+        description: "{{ doc('invoice_created_at') }}"
+      
+      - name: invoice_status
+        description: "{{ doc('invoice_status') }}"
+      
+      - name: total_amount
+        description: "{{ doc('total_amount') }}"
+      
+      - name: currency_code
+        description: "{{ doc('currency_code') }}"
+      
+      - name: invoice_date
+        description: "{{ doc('invoice_date') }}"
+      
+      - name: invoice_month
+        description: "{{ doc('invoice_month') }}"
+      
+      # Product attributes
+      - name: product_id
+        description: "{{ doc('product_id') }}"
+      
+      - name: product_family
+        description: "{{ doc('product_family') }}"
+      
+      - name: product_plan_name
+        description: "{{ doc('product_plan_name') }}"
+      
+      - name: per_removal_price
+        description: "{{ doc('per_removal_price') }}"
+      
+      # Calculated
+      - name: line_item_percentage
+        description: "{{ doc('line_item_percentage') }}"
+
+  - name: int_customer_metrics
+    description: "Aggregated customer-level metrics combining subscriptions, invoices, and tickets. Used for customer health scoring and segmentation."
+    columns:
+      # Key
+      - name: customer_id
+        description: "{{ doc('customer_id') }}"
+        tests:
+          - unique
+          - not_null
+      
+      # Customer attributes
+      - name: customer_name
+        description: "{{ doc('customer_name') }}"
+      
+      - name: country_code
+        description: "{{ doc('country_code') }}"
+      
+      - name: account_manager
+        description: "{{ doc('account_manager') }}"
+      
+      - name: default_currency
+        description: "{{ doc('default_currency') }}"
+      
+      # Subscription metrics
+      - name: total_subscriptions
+        description: "{{ doc('total_subscriptions') }}"
+      
+      - name: active_subscription_count
+        description: "{{ doc('active_subscription_count') }}"
+      
+      - name: cancelled_subscription_count
+        description: "{{ doc('cancelled_subscription_count') }}"
+      
+      - name: product_family_count
+        description: "{{ doc('product_family_count') }}"
+      
+      - name: current_mrr
+        description: "{{ doc('current_mrr') }}"
+      
+      # Revenue metrics
+      - name: lifetime_revenue
+        description: "{{ doc('lifetime_revenue') }}"
+      
+      - name: lifetime_subscription_revenue
+        description: "{{ doc('lifetime_subscription_revenue') }}"
+      
+      - name: lifetime_removal_revenue
+        description: "{{ doc('lifetime_removal_revenue') }}"
+      
+      # Invoice activity
+      - name: total_invoices
+        description: "{{ doc('total_invoices') }}"
+      
+      - name: paid_invoices
+        description: "{{ doc('paid_invoices') }}"
+      
+      - name: last_invoice_date
+        description: "{{ doc('last_invoice_date') }}"
+      
+      # Ticket metrics
+      - name: lifetime_tickets
+        description: "{{ doc('lifetime_tickets') }}"
+      
+      - name: successful_tickets
+        description: "{{ doc('successful_tickets') }}"
+      
+      - name: average_ticket_price
+        description: "{{ doc('average_ticket_price') }}"
+      
+      # Calculated metrics
+      - name: customer_lifetime_value
+        description: "{{ doc('customer_lifetime_value') }}"
+      
+      - name: health_score
+        description: "{{ doc('health_score') }}"
+      
+      - name: customer_segment
+        description: "{{ doc('customer_segment') }}"
+
+  - name: int_ticket_success_rates
+    description: "Aggregated ticket success rates by customer and product family, used for performance monitoring and account management."
+    columns:
+      # Dimensions
+      - name: customer_id
+        description: "{{ doc('customer_id') }}"
+        tests:
+          - not_null
+      
+      - name: customer_name
+        description: "{{ doc('customer_name') }}"
+      
+      - name: product_family
+        description: "{{ doc('product_family') }}"
+      
+      - name: account_manager
+        description: "{{ doc('account_manager') }}"
+      
+      # Aggregated metrics
+      - name: total_tickets
+        description: "{{ doc('total_tickets') }}"
+      
+      - name: successful_tickets
+        description: "{{ doc('successful_tickets') }}"
+      
+      - name: unsuccessful_tickets
+        description: "{{ doc('unsuccessful_tickets') }}"
+      
+      - name: completed_tickets
+        description: "{{ doc('completed_tickets') }}"
+      
+      - name: in_progress_tickets
+        description: "{{ doc('in_progress_tickets') }}"
+      
+      - name: success_rate
+        description: "{{ doc('success_rate') }}"
+      
+      - name: total_removal_revenue
+        description: "{{ doc('total_removal_revenue') }}"
+      
+      - name: average_ticket_value
+        description: "{{ doc('average_ticket_value') }}"
+      
+      - name: first_ticket_date
+        description: "{{ doc('first_ticket_date') }}"
+      
+      - name: last_ticket_date
+        description: "{{ doc('last_ticket_date') }}"

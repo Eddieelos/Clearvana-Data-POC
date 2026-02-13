@@ -1,0 +1,10 @@
+db2POC:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: db2_analytics.duckdb
+      threads: 4
+      extensions:
+        - httpfs
+        - parquet

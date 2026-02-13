@@ -1,0 +1,98 @@
+version: 2
+
+seeds:
+  - name: raw_customers
+    description: "Customer master data from MySQL db2.customers"
+    config:
+      column_types:
+        customer_id: varchar
+        name: varchar
+        created_at: timestamp
+        last_updated: timestamp
+        default_currency: varchar
+        account_manager: varchar
+        country: varchar
+
+  - name: raw_recurring_products
+    description: "Product catalog from MySQL db2.recurring_products"
+    config:
+      column_types:
+        product_id: varchar
+        product_plan_name: varchar
+        product_family_name: varchar
+        subscription_frequency: varchar
+        fee_type: varchar
+        currency: varchar
+        fee_per_frequency: decimal(12,2)
+        price_for_successful_removal: decimal(12,2)
+
+  - name: raw_stripe_subscriptions
+    description: "Subscription data from MySQL db2.stripe_subscriptions (2024+)"
+    config:
+      column_types:
+        subscription_id: varchar
+        customer_id: varchar
+        product_id: varchar
+        status: varchar
+        amount_in_dollars: decimal(12,2)
+        currency: varchar
+        start_date: timestamp
+        ended_date: timestamp
+
+  - name: raw_xero_invoices
+    description: "Invoice header data from MySQL db2.xero_invoices (2025+)"
+    config:
+      column_types:
+        invoice_id: varchar
+        customer_id: varchar
+        created: timestamp
+        status: varchar
+        due_date: timestamp
+        fully_paid_on_date: timestamp
+        total_amount: decimal(12,2)
+        amount_due: decimal(12,2)
+        currency_code: varchar
+        currency_rate_to_aud: decimal(12,6)
+        subscription_id: varchar
+        repeating_invoice_id: varchar
+        salesperson: varchar
+        currency_code: varchar
+
+  - name: raw_xero_invoices_items
+    description: "Invoice line items from MySQL db2.xero_invoices_items"
+    config:
+      column_types:
+        line_item_id: varchar
+        invoice_id: varchar
+        product_id: varchar
+        product_family_name: varchar
+        currency_code: varchar
+        line_amount: decimal(12,2)
+        description: varchar
+        ticket_id: varchar
+
+  - name: raw_xero_repeating_invoices
+    description: "Recurring invoice schedules from MySQL db2.xero_repeating_invoices"
+    config:
+      column_types:
+        repeating_invoice_id: varchar
+        customer_id: varchar
+        created: timestamp
+        status: varchar
+        schedule_unit: varchar
+        total_amount: decimal(12,2)
+
+  - name: raw_removal_tickets_sample
+    description: "Sampled removal tickets from MySQL db2.removals_tickets (last 6 months, every 10th row)"
+    config:
+      column_types:
+        ticket_id: varchar
+        customer_id: varchar
+        created_at: timestamp
+        last_updated: timestamp
+        removal_status: varchar
+        platform: varchar
+        successfully_removed_date: timestamp
+        price_for_successful_removal: decimal(12,2)
+        currency: varchar
+        billing_type: varchar

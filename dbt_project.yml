@@ -1,0 +1,48 @@
+name: 'db2POC'
+version: '1.0.0'
+config-version: 2
+
+profile: 'db2POC'
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+docs-paths: ["docs"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  db2POC:
+    # Staging models - Views for transformation
+    staging:
+      +materialized: view
+      +schema: staging
+      
+    # Intermediate models - Tables for complex logic
+    intermediate:
+      +materialized: table
+      +schema: intermediate
+      
+    # Marts - Final analytics tables
+    marts:
+      +materialized: table
+      core:
+        +schema: marts_core
+      finance:
+        +schema: marts_finance
+      operations:
+        +schema: marts_operations
+
+seeds:
+  db2POC:
+    +schema: raw
+    +quote_columns: false
+
+vars:
+  # Date ranges for initial load
+  start_date: '2025-01-01'
+  end_date: '2026-12-31'

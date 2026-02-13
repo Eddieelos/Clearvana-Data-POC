@@ -1,0 +1,476 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: "Customer dimension with aggregated metrics and health scores from int_customer_metrics"
+    columns:
+      - name: customer_key
+        description: "{{ doc('customer_key') }}"
+        tests:
+          - unique
+          - not_null
+      
+      - name: customer_id
+        description: "{{ doc('customer_id') }}"
+        tests:
+          - unique
+          - not_null
+      
+      - name: customer_name
+        description: "{{ doc('customer_name') }}"
+      
+      - name: country_code
+        description: "{{ doc('country_code') }}"
+      
+      - name: account_manager
+        description: "{{ doc('account_manager') }}"
+      
+      - name: default_currency
+        description: "{{ doc('default_currency') }}"
+      
+      - name: customer_created_at
+        description: "{{ doc('customer_created_at') }}"
+      
+      - name: lifetime_subscription_count
+        description: "{{ doc('lifetime_subscription_count') }}"
+      
+      - name: active_subscription_count
+        description: "{{ doc('active_subscription_count') }}"
+      
+      - name: churned_subscription_count
+        description: "{{ doc('cancelled_subscription_count') }}"
+      
+      - name: current_mrr
+        description: "{{ doc('current_mrr') }}"
+      
+      - name: lifetime_revenue
+        description: "{{ doc('lifetime_revenue') }}"
+      
+      - name: lifetime_tickets
+        description: "{{ doc('lifetime_tickets') }}"
+      
+      - name: lifetime_successful_tickets
+        description: "{{ doc('lifetime_successful_tickets') }}"
+      
+      - name: customer_churn_rate
+        description: "{{ doc('customer_churn_rate') }}"
+      
+      - name: lifetime_success_rate
+        description: "{{ doc('lifetime_success_rate') }}"
+      
+      - name: health_score
+        description: "{{ doc('health_score') }}"
+      
+      - name: customer_segment
+        description: "{{ doc('customer_segment') }}"
+      
+      - name: first_subscription_date
+        description: "{{ doc('first_subscription_date') }}"
+      
+      - name: last_invoice_date
+        description: "{{ doc('last_invoice_date') }}"
+      
+      - name: days_since_last_activity
+        description: "{{ doc('days_since_last_activity') }}"
+      
+      - name: is_currently_active
+        description: "{{ doc('is_currently_active') }}"
+      
+      - name: has_watchdog_product
+        description: "{{ doc('has_watchdog_product') }}"
+      
+      - name: has_retainer_product
+        description: "{{ doc('has_retainer_product') }}"
+      
+      - name: is_at_risk
+        description: "{{ doc('is_at_risk') }}"
+      
+      - name: dbt_updated_at
+        description: "{{ doc('dbt_updated_at') }}"
+
+  - name: dim_products
+    description: "Product dimension with business logic flags"
+    columns:
+      - name: product_key
+        description: "{{ doc('product_key') }}"
+        tests:
+          - unique
+          - not_null
+      
+      - name: product_id
+        description: "{{ doc('product_id') }}"
+        tests:
+          - unique
+          - not_null
+      
+      - name: product_plan_name
+        description: "{{ doc('product_plan_name') }}"
+      
+      - name: product_family
+        description: "{{ doc('product_family') }}"
+      
+      - name: billing_frequency
+        description: "{{ doc('billing_frequency') }}"
+      
+      - name: fee_type
+        description: "{{ doc('fee_type') }}"
+      
+      - name: currency_code
+        description: "{{ doc('currency_code') }}"
+      
+      - name: monthly_fee
+        description: "{{ doc('monthly_fee') }}"
+      
+      - name: per_removal_price
+        description: "{{ doc('per_removal_price') }}"
+      
+      - name: dbt_updated_at
+        description: "{{ doc('dbt_updated_at') }}"
+
+  - name: dim_dates
+    description: "Date dimension table covering 2024-2026"
+    columns:
+      - name: date_key
+        description: "{{ doc('date_key') }}"
+        tests:
+          - unique
+          - not_null
+      
+      - name: full_date
+        description: "{{ doc('full_date') }}"
+      
+      - name: year
+        description: "{{ doc('year') }}"
+      
+      - name: quarter
+        description: "{{ doc('quarter') }}"
+      
+      - name: month
+        description: "{{ doc('month') }}"
+      
+      - name: month_name
+        description: "{{ doc('month_name') }}"
+      
+      - name: week
+        description: "{{ doc('week') }}"
+      
+      - name: day
+        description: "{{ doc('day') }}"
+      
+      - name: day_of_week
+        description: "{{ doc('day_of_week') }}"
+      
+      - name: day_name
+        description: "{{ doc('day_name') }}"
+      
+      - name: month_start_date
+        description: "{{ doc('month_start_date') }}"
+      
+      - name: quarter_start_date
+        description: "{{ doc('quarter_start_date') }}"
+      
+      - name: year_start_date
+        description: "{{ doc('year_start_date') }}"
+      
+      - name: is_weekend
+        description: "{{ doc('is_weekend') }}"
+      
+      - name: is_month_start
+        description: "{{ doc('is_month_start') }}"
+      
+      - name: is_month_end
+        description: "{{ doc('is_month_end') }}"
+      
+      - name: is_quarter_start
+        description: "{{ doc('is_quarter_start') }}"
+      
+      - name: is_year_start
+        description: "{{ doc('is_year_start') }}"
+
+  - name: fct_subscriptions_monthly
+    description: "Monthly subscription snapshots for trend analysis. Each row represents one subscription in one month, allowing you to see active subscriptions at any point in time."
+    columns:
+      - name: subscription_month_key
+        description: "{{ doc('subscription_month_key') }}"
+        tests:
+          - unique
+          - not_null
+      
+      - name: subscription_id
+        description: "{{ doc('subscription_id') }}"
+      
+      - name: customer_id
+        description: "{{ doc('customer_id') }}"
+      
+      - name: product_id
+        description: "{{ doc('product_id') }}"
+      
+      - name: snapshot_month
+        description: "{{ doc('snapshot_month') }}"
+      
+      - name: snapshot_year
+        description: "{{ doc('snapshot_year') }}"
+      
+      - name: snapshot_month_number
+        description: "{{ doc('snapshot_month_number') }}"
+      
+      - name: snapshot_quarter
+        description: "{{ doc('snapshot_quarter') }}"
+      
+      - name: customer_name
+        description: "{{ doc('customer_name') }}"
+      
+      - name: country_code
+        description: "{{ doc('country_code') }}"
+      
+      - name: account_manager
+        description: "{{ doc('account_manager') }}"
+      
+      - name: product_family
+        description: "{{ doc('product_family') }}"
+      
+      - name: product_plan_name
+        description: "{{ doc('product_plan_name') }}"
+      
+      - name: billing_frequency
+        description: "{{ doc('billing_frequency') }}"
+      
+      - name: subscription_currency
+        description: "{{ doc('subscription_currency') }}"
+      
+      - name: subscription_start_date
+        description: "{{ doc('subscription_start_date') }}"
+      
+      - name: subscription_ended_date
+        description: "{{ doc('subscription_ended_date') }}"
+      
+      - name: mrr
+        description: "{{ doc('mrr') }}"
+        tests:
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+      
+      - name: status_in_month
+        description: "{{ doc('status_in_month') }}"
+      
+      - name: is_first_month
+        description: "{{ doc('is_first_month') }}"
+      
+      - name: is_last_month
+        description: "{{ doc('is_last_month') }}"
+      
+      - name: is_active
+        description: "{{ doc('is_active') }}"
+      
+      - name: months_since_start
+        description: "{{ doc('months_since_start') }}"
+      
+      - name: dbt_updated_at
+        description: "{{ doc('dbt_updated_at') }}"
+
+  - name: fct_invoices
+    description: "Invoice line items fact table with product attribution"
+    columns:
+      - name: invoice_line_key
+        description: "{{ doc('invoice_line_key') }}"
+        tests:
+          - unique
+          - not_null
+      
+      - name: line_item_id
+        description: "{{ doc('line_item_id') }}"
+      
+      - name: invoice_id
+        description: "{{ doc('invoice_id') }}"
+      
+      - name: customer_id
+        description: "{{ doc('customer_id') }}"
+      
+      - name: product_id
+        description: "{{ doc('product_id') }}"
+      
+      - name: ticket_id
+        description: "{{ doc('ticket_id') }}"
+      
+      - name: invoice_date
+        description: "{{ doc('invoice_date') }}"
+      
+      - name: invoice_month
+        description: "{{ doc('invoice_month') }}"
+      
+      - name: invoice_status
+        description: "{{ doc('invoice_status') }}"
+      
+      - name: line_amount
+        description: "{{ doc('line_amount') }}"
+      
+      - name: invoice_currency_code
+        description: "{{ doc('invoice_currency_code') }}"
+      
+      - name: total_amount
+        description: "{{ doc('total_amount') }}"
+      
+      - name: line_item_percentage
+        description: "{{ doc('line_item_percentage') }}"
+      
+      - name: product_family
+        description: "{{ doc('product_family') }}"
+      
+      - name: is_ticket_charge
+        description: "{{ doc('is_ticket_charge') }}"
+      
+      - name: dbt_updated_at
+        description: "{{ doc('dbt_updated_at') }}"
+
+  - name: fct_removal_tickets
+    description: "Removal tickets fact table"
+    columns:
+      - name: ticket_key
+        description: "{{ doc('ticket_key') }}"
+        tests:
+          - unique
+          - not_null
+      
+      - name: ticket_id
+        description: "{{ doc('ticket_id') }}"
+      
+      - name: customer_id
+        description: "{{ doc('customer_id') }}"
+      
+      - name: ticket_date
+        description: "{{ doc('ticket_date') }}"
+      
+      - name: ticket_month
+        description: "{{ doc('ticket_month') }}"
+      
+      - name: removal_status
+        description: "{{ doc('removal_status') }}"
+      
+      - name: platform
+        description: "{{ doc('platform') }}"
+      
+      - name: successfully_removed_date
+        description: "{{ doc('successfully_removed_date') }}"
+      
+      - name: removal_price
+        description: "{{ doc('removal_price') }}"
+      
+      - name: currency_code
+        description: "{{ doc('currency_code') }}"
+      
+      - name: billing_type
+        description: "{{ doc('billing_type') }}"
+      
+      - name: is_successful
+        description: "{{ doc('is_successful') }}"
+      
+      - name: is_unsuccessful
+        description: "{{ doc('is_unsuccessful') }}"
+      
+      - name: is_completed
+        description: "{{ doc('is_completed') }}"
+      
+      - name: dbt_updated_at
+        description: "{{ doc('dbt_updated_at') }}"
+
+  - name: mart_subscription_metrics
+    description: "Pre-aggregated subscription metrics by month and product family for dashboards"
+    columns:
+      - name: snapshot_month
+        description: "{{ doc('snapshot_month') }}"
+      
+      - name: snapshot_year
+        description: "{{ doc('snapshot_year') }}"
+      
+      - name: snapshot_month_number
+        description: "{{ doc('snapshot_month_number') }}"
+      
+      - name: snapshot_quarter
+        description: "{{ doc('snapshot_quarter') }}"
+      
+      - name: product_family
+        description: "{{ doc('product_family') }}"
+      
+      - name: product_plan_name
+        description: "{{ doc('product_plan_name') }}"
+      
+      - name: billing_frequency
+        description: "{{ doc('billing_frequency') }}"
+      
+      - name: country_code
+        description: "{{ doc('country_code') }}"
+      
+      - name: account_manager
+        description: "{{ doc('account_manager') }}"
+      
+      - name: total_subscriptions
+        description: "{{ doc('total_subscriptions') }}"
+      
+      - name: active_subscriptions
+        description: "{{ doc('active_subscription_count') }}"
+      
+      - name: new_subscriptions
+        description: "{{ doc('new_subscriptions') }}"
+      
+      - name: cancelled_subscriptions
+        description: "{{ doc('churned_subscriptions') }}"
+      
+      - name: total_mrr
+        description: "{{ doc('total_mrr') }}"
+      
+      - name: avg_mrr_per_subscription
+        description: "{{ doc('average_subscription_value') }}"
+      
+      - name: churn_rate
+        description: "{{ doc('churn_rate') }}"
+      
+      - name: unique_customers
+        description: "Number of unique customers with subscriptions in this period"
+    tests:
+      - dbt_utils.expression_is_true:
+          expression: "churn_rate IS NULL OR (churn_rate >= 0 AND churn_rate <= 1)"
+
+  - name: mart_customer_health
+    description: "Customer health dashboard with risk scoring and recent activity metrics"
+    columns:
+      - name: customer_id
+        description: "{{ doc('customer_id') }}"
+      
+      - name: customer_name
+        description: "{{ doc('customer_name') }}"
+      
+      - name: account_manager
+        description: "{{ doc('account_manager') }}"
+      
+      - name: customer_segment
+        description: "{{ doc('customer_segment') }}"
+      
+      - name: health_score
+        description: "{{ doc('health_score') }}"
+      
+      - name: current_mrr
+        description: "{{ doc('current_mrr') }}"
+      
+      - name: lifetime_revenue
+        description: "{{ doc('lifetime_revenue') }}"
+      
+      - name: active_subscription_count
+        description: "{{ doc('active_subscription_count') }}"
+      
+      - name: days_since_last_activity
+        description: "{{ doc('days_since_last_activity') }}"
+      
+      - name: tickets_last_30_days
+        description: "{{ doc('tickets_last_30_days') }}"
+      
+      - name: tickets_last_90_days
+        description: "{{ doc('tickets_last_90_days') }}"
+      
+      - name: recent_success_rate
+        description: "{{ doc('recent_success_rate') }}"
+      
+      - name: risk_category
+        description: "{{ doc('risk_category') }}"
+        tests:
+          - accepted_values:
+              values: ['Healthy', 'Monitor', 'Medium Risk', 'High Risk', 'Churned']
