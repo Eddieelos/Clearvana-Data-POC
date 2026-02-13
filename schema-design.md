@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Schema Design
+title: Clearvana POC data model
 ---
 
 # Schema Design
