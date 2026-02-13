@@ -1,0 +1,22 @@
+# GitHub Pages Configuration
+title: Clearvana POC - Data Model
+description: Proof of Concept Analytic Data Model for Clearvana - A company that deals with disinformation on the Web
+theme: jekyll-theme-cayman
+baseurl: "/ClearvanaPOC_info"
+url: "https://eddieelos.github.io"
+
+# Build settings
+markdown: kramdown
+plugins:
+  - jekyll-relative-links
+
+# Navigation
+navigation:
+  - title: Home
+    url: /
+  - title: Schema Design
+    url: /schema-design
+  - title: Documentation
+    url: /documentation
+  - title: Test Lineage
+    url: /test-lineage
