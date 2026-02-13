@@ -64,7 +64,7 @@ Tests, documentation, freshness checks.
 
 Three tools = guaranteed confusion.
 
-Pick **one** and sunset the others.
+Please pick one or two and sunset the others.
 
 ✅ Outcome: Consistent reporting.
 
@@ -91,7 +91,7 @@ Scale yourself without hiring:
 -   Metric change process\
 -   Data request workflow\
 -   Office hours\
--   "If it's not in DBT --- it's not official."
+#   "If it's not in DBT --- it's not official."
 
 ------------------------------------------------------------------------
 
