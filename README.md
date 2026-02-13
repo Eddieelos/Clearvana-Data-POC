@@ -1,4 +1,4 @@
-# ClearvanaPOC_info
+# Clearvana-Data-POC
 
 This is a Proof of Concept (POC) Analytic Data Model for Clearvana, a company that deals with disinformation on the Web.
 
