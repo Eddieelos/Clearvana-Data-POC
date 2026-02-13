@@ -6,7 +6,7 @@ This is a Proof of Concept (POC) Analytic Data Model for Clearvana, a company th
 
 This repository is configured as a GitHub Pages site with comprehensive documentation:
 
-🌐 **Visit the site**: [https://eddieelos.github.io/ClearvanaPOC_info](https://eddieelos.github.io/ClearvanaPOC_info)
+🌐 **Visit the site**: [https://eddieelos.github.io/Clearvana-Data-POC_info](https://eddieelos.github.io/Clearvana-Data-POC)
 
 ## Contents
 
