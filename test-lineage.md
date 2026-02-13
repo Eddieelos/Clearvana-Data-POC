@@ -146,7 +146,7 @@ TEST: Update verification status
 TEST: Calculate credibility score
   GIVEN: Source with verification history
   WHEN: Score calculation runs
-  WHEN: Score is between 0 and 1
+  THEN: Score is between 0 and 1
   
 TEST: Prevent duplicate sources
   GIVEN: Existing source domain
