@@ -1,0 +1,23 @@
+-- Seed reference files will be created automatically from CSV exports
+-- This file documents the expected seed structure
+
+-- raw_customers.csv
+-- Expected columns: customer_id, name, created_at, last_updated, default_currency, account_manager, country
+
+-- raw_recurring_products.csv
+-- Expected columns: product_id, product_plan_name, product_family_name, subscription_frequency, fee_type, currency, fee_per_frequency, price_for_successful_removal
+
+-- raw_stripe_subscriptions.csv
+-- Expected columns: subscription_id, customer_id, product_id, status, amount_in_dollars, currency, start_date, ended_date
+
+-- raw_xero_invoices.csv
+-- Expected columns: invoice_id, subscription_id, created, status, total_amount, currency_code
+
+-- raw_xero_invoices_items.csv
+-- Expected columns: line_item_id, invoice_id, product_id, product_family_name, currency_code, line_amount, description, ticket_id
+
+-- raw_xero_repeating_invoices.csv
+-- Expected columns: repeating_invoice_id, customer_id, created, status, schedule_unit, total_amount
+
+-- raw_removal_tickets_sample.csv
+-- Expected columns: ticket_id, customer_id, created_at, last_updated, removal_status, platform, successfully_removed_date, price_for_successful_removal, currency, billing_type

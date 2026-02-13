@@ -1,22 +1,9 @@
-# Jekyll
-_site/
-.sass-cache/
-.jekyll-cache/
-.jekyll-metadata
-
-# Ruby
-*.gem
-.bundle
-vendor/
-Gemfile.lock
-
-# OS files
+target/
+dbt_packages/
+logs/
+*.duckdb
+*.duckdb.wal
 .DS_Store
-Thumbs.db
-
-# Editor files
-*.swp
-*.swo
-*~
-.vscode/
-.idea/
+.venv/
+__pycache__/
+*.pyc
