@@ -3,6 +3,8 @@ layout: default
 title: Clearvana POC - Data Model
 ---
 
+![Clearvana Logo](docs/assets/clearvana 3_2.png)
+
 # Clearvana POC - Data Model
 
 Welcome to the Clearvana Proof of Concept (POC) Data Model documentation. This site contains comprehensive information about the analytic data model designed for Clearvana, a company focused on combating disinformation on the Web.
@@ -16,6 +18,7 @@ This POC demonstrates the data model architecture, schema design, and testing fr
 - [Schema Design](schema-design.md) - Explore the database schema and entity relationships
 - [Documentation](documentation.md) - Detailed documentation of the data model components
 - [Test Lineage](test-lineage.md) - Test coverage and data lineage tracking
+- [Data Roadmap](clearvana_data_roadmap.md) - Strategic roadmap for data infrastructure and analytics
 
 ## Project Goals
 
