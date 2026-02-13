@@ -83,22 +83,19 @@ dbt deps
 This will install packages defined in [packages.yml](packages.yml) into the `dbt_packages/` directory.
 
 ### 5. Configure MySQL Connection (For Data Export)
-The export script needs MySQL credentials. Update the script if needed:
+The export script needs MySQL credentials. Create a connection config file:
 
 ```bash
-nano scripts/export_all_tables.sh
+# Copy the example config file
+cp connection_config.example.sh connection_config.sh
+
+# Edit with your actual credentials
+nano connection_config.sh
 ```
 
-Update these variables at the top of the script:
-```bash
-DB_HOST="localhost"
-DB_PORT="3306"
-DB_USER="your_mysql_user"
-DB_PASS="your_mysql_password"
-DB_NAME="db2"
-```
+Update the connection variables in `connection_config.sh` with your MySQL credentials.
 
-**Security Note:** For production, use environment variables or `.env` file instead of hardcoding credentials.
+**Security Note:** The `connection_config.sh` file is in `.gitignore` and will never be committed. Always use this separate config file instead of hardcoding credentials in scripts.
 
 ### 6. Export Data from MySQL
 Run the export script to extract data from MySQL into CSV files:

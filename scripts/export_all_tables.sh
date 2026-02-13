@@ -1,15 +1,23 @@
 #!/bin/bash
 
-# MySQL connection details
-MYSQL_HOST="13.239.119.181"
-MYSQL_PORT="3306"
-MYSQL_USER="db2_user"
-MYSQL_PASS="USp3J7oLKvpH1zgqlMFm"
-MYSQL_DB="db2"
-
 # Get the directory where this script is located
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-OUTPUT_DIR="$SCRIPT_DIR/../seeds"
+PROJECT_ROOT="$SCRIPT_DIR/.."
+OUTPUT_DIR="$PROJECT_ROOT/seeds"
+
+# Load connection configuration
+if [ -f "$PROJECT_ROOT/connection_config.sh" ]; then
+    source "$PROJECT_ROOT/connection_config.sh"
+    MYSQL_HOST="$DB_HOST"
+    MYSQL_PORT="$DB_PORT"
+    MYSQL_USER="$DB_USER"
+    MYSQL_PASS="$DB_PASS"
+    MYSQL_DB="$DB_NAME"
+else
+    echo "❌ Error: connection_config.sh not found!"
+    echo "Please copy connection_config.example.sh to connection_config.sh and configure your credentials."
+    exit 1
+fi
 
 echo "Exporting Clearvana db2 tables to CSV..."
 echo "========================================="

@@ -7,3 +7,13 @@ logs/
 .venv/
 __pycache__/
 *.pyc
+
+# Seed data files (contain sensitive data)
+seeds/*.csv
+!seeds/.gitkeep
+seeds.yml
+
+# Connection configuration (contains credentials)
+connection_config.sh
+profiles.yml
+
