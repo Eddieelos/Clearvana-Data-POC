@@ -53,9 +53,11 @@ tribal knowledge.
 AI tools depend on clean, well-structured, and well-defined data.
 If metrics are inconsistentor poorly modeled, AI outputs will be unreliable.
 A DBT-powered warehouse creates curated, high-quality datasets that are ready for AI 
+
 ------------------------------------------------------------------------
 
 **Project Documentation & Lineage (dbt)**
+
 The following screenshots demonstrate the dbt documentation generator's ability to visualize complex project architecture.
 This includes detailed model descriptions, automated test results, and full dependency mapping.
 
