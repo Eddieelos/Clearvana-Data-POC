@@ -3,10 +3,9 @@ layout: default
 title: Clearvana POC - Data Model
 ---
 
-                                    ![Clearvana Logo]       (docs/assets/clearvana%203_2.png)
-
-
-
+<div style="text-align: center;">
+  <img src="docs/assets/clearvana%203_2.png" alt="Clearvana Logo" />
+</div>
 
 # Data Roadmap --- Clearvana
 
