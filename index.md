@@ -3,7 +3,7 @@ layout: default
 title: Clearvana POC - Data Model
 ---
 
-                                             ![Clearvana Logo](docs/assets/clearvana%203_2.png)
+                                    ![Clearvana Logo]       (docs/assets/clearvana%203_2.png)
 
 
 
