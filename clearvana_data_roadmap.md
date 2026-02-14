@@ -17,7 +17,7 @@
 - Identify conflicting numbers (revenue, churn, customers)\
 - Retire duplicate / low-value dashboards
 
-✅ Deliverable: Data inventory + discrepancy report
+Deliverable: Data inventory + discrepancy report
 
 ------------------------------------------------------------------------
 
@@ -31,7 +31,7 @@ Customer, Subscription, Invoice, Payment, Product, Usage
 **Lock core metrics**\
 MRR / ARR, success rate, retention, churn, expansion, ARPU, LTV
 
-✅ Deliverable: **Metrics Dictionary (company data constitution)**
+Deliverable: **Metrics Dictionary (company data constitution)**
 
 ------------------------------------------------------------------------
 
@@ -56,7 +56,7 @@ MySQL → Warehouse → DBT → Single BI tool
 **Non-negotiables**\
 Tests, documentation, freshness checks.
 
-✅ Outcome: Trusted semantic layer for the company.
+ Outcome: Trusted semantic layer for the company.
 
 ------------------------------------------------------------------------
 
@@ -66,7 +66,7 @@ Three tools = guaranteed confusion.
 
 Please pick one or two and sunset the others.
 
-✅ Outcome: Consistent reporting.
+Outcome: Consistent reporting.
 
 ------------------------------------------------------------------------
 
@@ -91,7 +91,7 @@ Scale yourself without hiring:
 -   Metric change process\
 -   Data request workflow\
 -   Office hours\
-#   "If it's not in DBT --- it's not official."
+   "If it's not in DBT --- it's not official."
 
 ------------------------------------------------------------------------
 
