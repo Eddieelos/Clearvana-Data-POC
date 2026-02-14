@@ -39,7 +39,7 @@ This POC demonstrates the data model architecture, schema design, and testing fr
 - [Documentation](documentation.md) - Detailed documentation of the data model components
 - [Test Lineage](test-lineage.md) - Test coverage and data lineage tracking
 - [Models Directory](https://github.com/Eddieelos/Clearvana-Data-POC/tree/main/models) - dbt models for data transformations
-- [Column Descriptions](docs/column_descriptions.md) - Detailed descriptions of all data columns
+- [Column Descriptions](https://github.com/Eddieelos/Clearvana-Data-POC/blob/main/docs/column_descriptions.md) - Detailed descriptions of all data columns (dbt documentation)
 - [Metric Definitions](docs/metric_definitions.md) - Definitions of key metrics and KPIs
 
 ## Project Goals
