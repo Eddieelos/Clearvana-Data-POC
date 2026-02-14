@@ -10,10 +10,8 @@ markdown: kramdown
 plugins:
   - jekyll-relative-links
 
-# Exclude dbt documentation markdown files from Jekyll processing
-# (Keep docs/assets/ accessible for images)
-exclude:
-  - docs/*.md
+# Note: docs markdown files are now included for Jekyll processing
+# to enable proper linking from index.md
 
 # Navigation
 navigation:
