@@ -1,9 +1,0 @@
-product_id,product_plan_name,product_family_name,subscription_frequency,fee_type,currency,fee_per_frequency,price_for_successful_removal
-prod_1,Basic (AUD),WatchDog,MONTHLY,Fixed,AUD,49.00,1000.00
-prod_2,Premium (AUD),WatchDog,MONTHLY,Fixed,AUD,99.00,500.00
-prod_3,Basic (USD),WatchDog,MONTHLY,Fixed,USD,39.00,750.00
-prod_4,Premium (USD),WatchDog,MONTHLY,Fixed,USD,79.00,375.00
-prod_5,Retainer Paid Monthly (AUD),Retainer,MONTHLY,Custom,AUD,,
-prod_6,Retainer Paid Monthly (USD),Retainer,MONTHLY,Custom,USD,,
-prod_7,Retainer Paid Yearly (AUD),Retainer,YEARLY,Custom,AUD,,
-prod_8,Retainer Paid Yearly (USD),Retainer,YEARLY,Custom,USD,,
