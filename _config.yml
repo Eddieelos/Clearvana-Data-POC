@@ -10,8 +10,9 @@ markdown: kramdown
 plugins:
   - jekyll-relative-links
 
-# Note: docs markdown files are now included for Jekyll processing
-# to enable proper linking from index.md
+# Exclude dbt documentation files that contain Liquid tags Jekyll cannot process
+exclude:
+  - docs/column_descriptions.md
 
 # Navigation
 navigation:
