@@ -29,7 +29,7 @@
 Customer, Subscription, Invoice, Payment, Product, Usage
 
 **Lock core metrics**\
-MRR / ARR, NRR, GRR, churn, expansion, ARPU, LTV
+MRR / ARR, success rate, retention, churn, expansion, ARPU, LTV
 
 ✅ Deliverable: **Metrics Dictionary (company data constitution)**
 
