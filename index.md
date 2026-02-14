@@ -70,25 +70,18 @@ A DBT-powered warehouse creates curated, high-quality datasets that are ready fo
 
 <div style="text-align: center;">
   <img src="docs/assets/Success_rate.png" alt="Success Rate Visualization" />
-  <p><em> dBt data catalog - Description and definition of success rate metrics </em></p>
+  <p><em> Dbt data catalog - Description and definition of success rate metrics </em></p>
 </div>
 
 ## Quick Links
 
 - [Data Roadmap](clearvana_data_roadmap.md) - Strategic roadmap for data infrastructure and analytics
 - [Schema Design](Schema_desc.md) - Explore the database schema and entity relationships
+- [Metric Definitions](docs/metric_definitions.md) - Definitions of key metrics and KPIs
 - [Documentation](documentation.md) - Detailed documentation of the data model components
-- [Test Lineage](test-lineage.md) - Test coverage and data lineage tracking
 - [Models Directory](https://github.com/Eddieelos/Clearvana-Data-POC/tree/main/models) - dbt models for data transformations
 - [Column Descriptions](https://github.com/Eddieelos/Clearvana-Data-POC/blob/main/docs/column_descriptions.md) - Detailed descriptions of all data columns (dbt documentation)
-- [Metric Definitions](docs/metric_definitions.md) - Definitions of key metrics and KPIs
 
-## Project Goals
-
-1. **Data Model Design** - Create a scalable and efficient data model for disinformation tracking
-2. **Schema Documentation** - Provide clear documentation of all entities and relationships
-3. **Test Coverage** - Ensure comprehensive testing and data lineage tracking
-4. **Proof of Concept** - Validate the approach with real-world scenarios
 
 ## About Clearvana
 
