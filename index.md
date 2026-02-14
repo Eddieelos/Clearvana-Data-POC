@@ -15,21 +15,62 @@ Welcome to the Clearvana Proof of Concept (POC) Data Model documentation. This s
 
 ## Overview
 
-This POC demonstrates the data model architecture, schema design, and testing framework for analyzing and tracking disinformation patterns across web platforms.
+Overview — Moving to a Modern Analytics Platform with DBT
+
+Clearvana’s current approach — running analytics directly from a cloned MySQL transactional database — creates structural limitations that will continue to erode data trust, prevent a true single source of truth, and introduce long-term scalability and maintenance risks.
+
+**Migrating to a dedicated analytical database powered by DBT is not just a technical upgrade
+— it is an organizational shift toward reliable, decision-grade data.**
+
+------------------------------------------------------------------------
+## Why Change?
+
+**1. Rebuild Data Trust**\
+Transactional schemas are not designed for analytics. When revenue,
+churn, or customer numbers are calculated in multiple places, dashboards
+conflict and confidence drops. Centralizing logic in DBT ensures metrics
+are defined once and reused everywhere.
+
+**2. Create a Single Source of Truth**\
+Today, business logic likely lives inside dashboards and custom SQL. DBT
+shifts that logic into a governed modeling layer that is tested,
+documented, and version-controlled --- so everyone works from the same
+definitions.
+
+**3. Scale Without Breaking Reporting**\
+As data grows, querying a transactional replica becomes slower and
+harder to manage. An analytical warehouse is built for heavy queries,
+historical analysis, and concurrent users --- meaning reporting stays
+fast as the company grows.
+
+**4. Reduce Ongoing Maintenance**\
+Without a modeling layer, every schema change risks breaking reports.
+DBT introduces structure (staging → intermediate → marts), making the
+system easier to understand, safer to evolve, and far less dependent on
+tribal knowledge.
+
+**5. Become AI-Friendly**\
+AI tools depend on clean, well-structured, and well-defined data.
+If metrics are inconsistentor poorly modeled, AI outputs will be unreliable.
+A DBT-powered warehouse creates curated, high-quality datasets that are ready for AI 
+
+
+
+
 
 <div style="text-align: center;">
   <img src="docs/assets/Lineage.png" alt="Data Lineage Diagram" />
-  <p><em>Data lineage showing the flow and transformation of data across the system</em></p>
+  <p><em>DBT -  Data lineage showing the flow and transformation of data across the system </em></p>
 </div>
 
 <div style="text-align: center;">
   <img src="docs/assets/Srate_lineage.png" alt="Success Rate Lineage" />
-  <p><em>Success rate lineage tracking data quality and validation metrics</em></p>
+  <p><em> For example -Success rate lineage tracking data quality and validation metrics</em></p>
 </div>
 
 <div style="text-align: center;">
   <img src="docs/assets/Success_rate.png" alt="Success Rate Visualization" />
-  <p><em>Visualization of success rate metrics across different data pipelines</em></p>
+  <p><em> dBt data catalog - Description and definition of success rate metrics </em></p>
 </div>
 
 ## Quick Links
