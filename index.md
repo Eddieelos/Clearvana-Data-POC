@@ -20,7 +20,7 @@ This POC demonstrates the data model architecture, schema design, and testing fr
 ## Quick Links
 
 - [Data Roadmap](clearvana_data_roadmap.md) - Strategic roadmap for data infrastructure and analytics
-- [Schema Design](Schema desc.md) - Explore the database schema and entity relationships
+- [Schema Design](Schema_desc.md) - Explore the database schema and entity relationships
 - [Documentation](documentation.md) - Detailed documentation of the data model components
 - [Test Lineage](test-lineage.md) - Test coverage and data lineage tracking
 
